@@ -1,4 +1,4 @@
-# Forticam – Netlify settings. Static site: no build step, publish the repo root.
+# Forticam main site — static HTML/CSS/JavaScript, no build command required.
 [build]
   publish = "."
 
@@ -10,6 +10,18 @@
     Referrer-Policy = "strict-origin-when-cross-origin"
     Permissions-Policy = "camera=(), microphone=(), geolocation=()"
 
+# Revalidate pages so updates appear promptly after deployment.
+[[headers]]
+  for = "/"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+# Cache site images and assets while allowing regular updates.
 [[headers]]
   for = "/images/*"
   [headers.values]
