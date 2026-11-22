@@ -42,32 +42,35 @@
     box.addEventListener('click', function (e) { if (e.target === box) box.close(); });
   }
 
-  // Contact form: submit to Netlify Forms without leaving the page
+  // Prepare a WhatsApp consultation message from the site-visit form.
   var form = document.getElementById('contact-form');
-  if (form && window.fetch) {
+  if (form) {
     var status = form.querySelector('.form__status');
-    var button = form.querySelector('button[type="submit"]');
     form.addEventListener('submit', function (e) {
       e.preventDefault();
-      button.disabled = true;
-      status.removeAttribute('data-state');
-      status.textContent = 'Sending…';
-      fetch('/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams(new FormData(form)).toString()
-      })
-        .then(function (res) {
-          if (!res.ok) throw new Error(res.status);
-          form.reset();
-          status.setAttribute('data-state', 'ok');
-          status.textContent = 'Thank you! We have your request and will call you soon to arrange a site visit.';
-        })
-        .catch(function () {
-          status.setAttribute('data-state', 'error');
-          status.textContent = 'Sorry, that did not go through. Please call or WhatsApp us on 9217295528.';
-        })
-        .finally(function () { button.disabled = false; });
+
+      var data = new FormData(form);
+      var message = [
+        'Hi Forticam, I would like to request a site visit.',
+        '',
+        'Name: ' + data.get('name'),
+        'Phone: ' + data.get('phone'),
+        'Email: ' + (data.get('email') || 'Not provided'),
+        'Property: ' + data.get('property'),
+        'Location: ' + data.get('location'),
+        'Interested in: ' + data.get('service'),
+        'Message: ' + (data.get('message') || 'Not provided')
+      ].join('\n');
+      var whatsappUrl = 'https://wa.me/919217295528?text=' + encodeURIComponent(message);
+      var whatsappWindow = window.open(whatsappUrl, '_blank');
+
+      if (whatsappWindow) {
+        whatsappWindow.opener = null;
+        status.textContent = 'WhatsApp opened with your consultation details. Review the message and tap Send to submit your request.';
+      } else {
+        window.location.href = whatsappUrl;
+      }
+      status.setAttribute('data-state', 'ok');
     });
   }
 })();
