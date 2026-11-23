@@ -43,3 +43,9 @@
   to = "https://forticam.in/:splat"
   status = 301
   force = true
+
+[[headers]]
+  for = "/sw.js"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+    Service-Worker-Allowed = "/"

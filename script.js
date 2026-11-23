@@ -74,3 +74,30 @@
     });
   }
 })();
+
+
+// Polish: reveal-on-scroll, live "years" counter, offline/fast-load cache
+(function () {
+  var root = document.documentElement;
+  root.classList.remove('no-js');
+  root.classList.add('js');
+
+  document.querySelectorAll('[data-years-since]').forEach(function (el) {
+    var since = parseInt(el.getAttribute('data-years-since'), 10);
+    if (since) el.textContent = String(new Date().getFullYear() - since);
+  });
+
+  var targets = document.querySelectorAll('.section-head, .card, .product, .step, .photo, .office, .faq details, .why__item, .stat, .cta__inner');
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('is-visible'); io.unobserve(e.target); }
+      });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+    targets.forEach(function (el) { el.classList.add('reveal'); io.observe(el); });
+  }
+
+  if ('serviceWorker' in navigator && location.protocol === 'https:') {
+    window.addEventListener('load', function () { navigator.serviceWorker.register('sw.js').catch(function () {}); });
+  }
+})();
