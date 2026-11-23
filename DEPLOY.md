@@ -1,6 +1,6 @@
-# Publish the Forticam website
+# Publish the Forticam website (forticam.in)
 
-Forticam is a static HTML/CSS/JavaScript website. No package installation or build command is required to deploy the site.
+This is a static HTML/CSS/JavaScript website. There is no build step or package install required to serve it.
 
 ## Preview locally
 
@@ -12,9 +12,9 @@ python3 -m http.server 8000
 
 Open <http://localhost:8000>.
 
-## Publish to the existing Netlify site
+## Publish with Netlify CLI
 
-Install and authenticate the Netlify CLI. Link the existing site when prompted, then publish the repository root:
+Install and sign in to the Netlify CLI, then link the existing Netlify site if prompted:
 
 ```bash
 npm install -g netlify-cli
@@ -23,12 +23,16 @@ netlify link
 netlify deploy --prod --dir=.
 ```
 
-Select the existing site `forticam-in-nktd` when the CLI asks. Check the preview URL before a production deployment. Do not put an access token directly into commands, source files, or chat.
+The CLI may ask you to select the existing Forticam Netlify site. Confirm the production deploy only after checking the preview deploy.
 
-## Automatic publishing
+## Automatic deploys
 
-When this GitHub repository is connected to the existing Netlify site and the production branch is `main`, every push to `main` should trigger a deploy. The site has no build command and uses `.` as its publish directory. Confirm the deploy status and production URL in the Netlify dashboard's **Deploys** page.
+If the GitHub repository is already connected to the Netlify site, pushes to its configured production branch deploy automatically. No GitHub token or `GITHUB_TOKEN` is needed for this static site. Check the Netlify site's **Deploys** page to confirm the build completed and the production URL is live.
 
-## Team photo and high-resolution images
+For this site, use the repository root (`.`) as the publish directory and leave the build command empty. `netlify.toml` contains the hosting and cache headers.
 
-The new team feature currently uses the existing `images/setup-handover.jpg` installation photo. For an accurate photo of Indian Forticam staff in branded T-shirts, replace it with an authentic, approved company photo at that path. The current repository photo cannot be made into genuine 4K detail by code. For crisp large-screen imagery, provide an original high-resolution image (ideally 3840px wide), then export optimized WebP/AVIF versions and update the image source. Keep a smaller responsive/mobile variant to avoid downloading unnecessarily large files on phones.
+## Image quality and performance
+
+The page uses the images committed under `images/`; CSS cannot turn a small source image into true 4K detail. For sharp large-screen imagery, upload original high-resolution photos and export optimized WebP/AVIF variants at the sizes actually used. Keep hero imagery high priority and defer below-the-fold images so mobile visitors do not download full-resolution assets unnecessarily.
+
+Never commit access tokens. If a token was shared in chat or another public place, revoke it in GitHub settings and use a new, least-privilege credential only in a local secret store.

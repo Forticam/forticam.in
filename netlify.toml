@@ -1,4 +1,4 @@
-# Forticam main site — static HTML/CSS/JavaScript, no build command required.
+# Forticam CCTV – Netlify settings. Static site: no build step, publish the repo root.
 [build]
   publish = "."
 
@@ -10,7 +10,7 @@
     Referrer-Policy = "strict-origin-when-cross-origin"
     Permissions-Policy = "camera=(), microphone=(), geolocation=()"
 
-# Revalidate pages so updates appear promptly after deployment.
+# Revalidate HTML so visitors receive the latest published page.
 [[headers]]
   for = "/"
   [headers.values]
@@ -21,12 +21,13 @@
   [headers.values]
     Cache-Control = "public, max-age=0, must-revalidate"
 
-# Cache site images and assets while allowing regular updates.
+# Images can be cached longer; HTML remains revalidated for fresh content.
 [[headers]]
   for = "/images/*"
   [headers.values]
     Cache-Control = "public, max-age=2592000"
 
+# Keep code cache short enough that updates appear promptly without disabling caching.
 [[headers]]
   for = "/*.css"
   [headers.values]

@@ -1,6 +1,8 @@
 # Forticam – forticam.in
 
-Main website for **Forticam**, CCTV and smart security installation for homes, offices and companies in Faridabad and Gurgaon, since 2009.
+Website for **Forticam**: CCTV cameras, DVR/NVR recorders and video door phones for homes, offices and companies in Faridabad and Gurgaon, since 2009. Smart Surveillance, Smarter Protection For A Safer Spaces.
+
+This site uses the same code as the CCTV site (`Forticam/Forticam.cctv.in`), so both sites look and work the same. Only the domain-specific lines differ (canonical address, sitemap, robots, `www` redirect).
 
 Plain HTML, CSS and JavaScript. No build step, no dependencies.
 
@@ -8,11 +10,10 @@ Plain HTML, CSS and JavaScript. No build step, no dependencies.
 
 | Path | What it is |
 | --- | --- |
-| `index.html` | The whole page: hero, services, cameras, spaces, gallery, process, about, contact |
+| `index.html` | The page: hero, cameras, which camera where, installation steps, gallery, FAQ, contact |
 | `styles.css` | All styling |
-| `script.js` | Space tabs, photo lightbox, and the consultation form (opens WhatsApp with the details filled in) |
+| `script.js` | Photo lightbox and the consultation form (opens WhatsApp with the details filled in) |
 | `images/`, `logo.png` | Photos and logo |
-| `videos/` | Put `forticam.mp4` here, then follow the comment in the Gallery section of `index.html` |
 | `netlify.toml` | Hosting settings: security headers, caching, `www` redirect |
 | `robots.txt`, `sitemap.xml`, `404.html` | SEO and error page |
 
@@ -25,24 +26,19 @@ python3 -m http.server 8000
 
 ## Publish
 
-The site is static, so any static host works.
+**Netlify with GitHub (recommended):** open the Netlify project, go to Project configuration, Build and deploy, Continuous deployment, Link repository, choose GitHub and this repo, branch `main`. Leave the build command empty and set the publish directory to `.`. Every push to `main` then deploys automatically.
 
-**Netlify (recommended)**
+**Netlify CLI**
 
 ```bash
 npm install -g netlify-cli
 netlify login
+netlify link
 netlify deploy --prod --dir=.
 ```
 
-Or connect this GitHub repo in Netlify with the build command empty and the publish directory set to `.`. Every push to `main` then deploys automatically.
+Then add `forticam.in` under Domain management.
 
-**GitHub Pages**: Settings, Pages, deploy from `main` and `/ (root)`, then set the custom domain to `forticam.in`.
+## Earlier version
 
-## Change contact details
-
-The phone number and email appear in `index.html` (hero, contact section, footer and the structured data block near the top) and the WhatsApp number in `script.js`. Search for the old value and replace every match.
-
-## Related
-
-`forticam.cctv.in` is the CCTV-focused companion site, in the repo `Forticam/Forticam.cctv.in`.
+The previous main-site design (six services, "your space" tabs) is kept in git history. To see it: `git show f507724:index.html`.
