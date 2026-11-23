@@ -2,20 +2,19 @@
 
 Website for **Forticam**: CCTV cameras, DVR/NVR recorders and video door phones for homes, offices and companies in Faridabad and Gurgaon, since 2009. Smart Surveillance, Smarter Protection For A Safer Spaces.
 
-This site uses the same code as the CCTV site (`Forticam/Forticam.cctv.in`), so both sites look and work the same. Only the domain-specific lines differ (canonical address, sitemap, robots, `www` redirect).
-
-Plain HTML, CSS and JavaScript. No build step, no dependencies.
+Plain HTML, CSS and JavaScript. No build step, no dependencies, no paid hosting needed.
 
 ## Files
 
 | Path | What it is |
 | --- | --- |
-| `index.html` | The page: hero, cameras, which camera where, installation steps, gallery, FAQ, contact |
-| `styles.css` | All styling |
-| `script.js` | Photo lightbox and the consultation form (opens WhatsApp with the details filled in) |
+| `index.html` | The page: hero, why Forticam, cameras, which camera where, installation steps, gallery, FAQ, contact |
+| `styles.css` | All styling, including scaling for 4K screens |
+| `script.js` | Photo viewer, scroll animations, and the consultation form (opens WhatsApp with the details filled in) |
+| `sw.js` | Small cache so repeat visits load instantly |
 | `images/`, `logo.png` | Photos and logo |
-| `netlify.toml` | Hosting settings: security headers, caching, `www` redirect |
-| `robots.txt`, `sitemap.xml`, `404.html` | SEO and error page |
+| `404.html`, `robots.txt`, `sitemap.xml`, `.nojekyll` | Error page, SEO files, and a switch that tells GitHub Pages to serve the files as they are |
+| `DEPLOY.md` | Step by step: publish for free on GitHub Pages |
 
 ## Run it locally
 
@@ -24,21 +23,10 @@ python3 -m http.server 8000
 # open http://localhost:8000
 ```
 
-## Publish
+## Publish for free
 
-**Netlify with GitHub (recommended):** open the Netlify project, go to Project configuration, Build and deploy, Continuous deployment, Link repository, choose GitHub and this repo, branch `main`. Leave the build command empty and set the publish directory to `.`. Every push to `main` then deploys automatically.
+See [DEPLOY.md](DEPLOY.md). Short version: Settings, Pages, Deploy from a branch, `main`, `/ (root)`, Save.
 
-**Netlify CLI**
+## Changing photos
 
-```bash
-npm install -g netlify-cli
-netlify login
-netlify link
-netlify deploy --prod --dir=.
-```
-
-Then add `forticam.in` under Domain management.
-
-## Earlier version
-
-The previous main-site design (six services, "your space" tabs) is kept in git history. To see it: `git show f507724:index.html`.
+Put your own photo in `images/` with the same file name (for example `images/setup-handover.jpg`). The page picks it up with no code change. Use photos at least 1920 pixels wide so they stay sharp on 4K screens.

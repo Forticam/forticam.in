@@ -1,38 +1,48 @@
-# Publish the Forticam website (forticam.in)
+# Publish forticam.in for free (GitHub Pages)
 
-This is a static HTML/CSS/JavaScript website. There is no build step or package install required to serve it.
+GitHub Pages hosts this site at no cost and needs no credits. The code is already in this repo, so there is nothing to build or install.
 
-## Preview locally
+## 1. Turn on GitHub Pages (about 2 minutes)
+
+1. Open https://github.com/Forticam/forticam.in
+2. Click **Settings**, then **Pages** in the left menu.
+3. Under **Build and deployment**, set **Source** to **Deploy from a branch**.
+4. Set **Branch** to `main` and the folder to `/ (root)`, then click **Save**.
+5. Wait one to two minutes and refresh the page. GitHub shows **Your site is live at** with the address. Open it.
+
+Every time you push a change to `main`, the site updates by itself within a minute or two.
+
+## 2. Use your own domain (optional)
+
+Go to Settings, Pages, **Custom domain**, type `forticam.in` and Save. GitHub then asks you to set DNS at the company where you bought the domain.
+
+**For an apex domain such as `forticam.in`:** add four `A` records for `@`:
+
+```
+185.199.108.153
+185.199.109.153
+185.199.110.153
+185.199.111.153
+```
+
+**For a subdomain such as `cctv.forticam.in` or `www.forticam.in`:** add one `CNAME` record pointing to `forticam.github.io`.
+
+Then tick **Enforce HTTPS** once GitHub finishes checking (it can take up to an hour).
+
+You can only use a domain you own. If `forticam.in` is not yours, use a subdomain of a domain you do own.
+
+## Using the command line instead
 
 ```bash
-git clone https://github.com/Forticam/forticam.in.git
+git clone https://github.com/Forticam/forticam.in
 cd forticam.in
-python3 -m http.server 8000
+# edit files, then:
+git add -A
+git commit -m "Update site"
+git push origin main
 ```
 
-Open <http://localhost:8000>.
+## Other free hosts
 
-## Publish with Netlify CLI
-
-Install and sign in to the Netlify CLI, then link the existing Netlify site if prompted:
-
-```bash
-npm install -g netlify-cli
-netlify login
-netlify link
-netlify deploy --prod --dir=.
-```
-
-The CLI may ask you to select the existing Forticam Netlify site. Confirm the production deploy only after checking the preview deploy.
-
-## Automatic deploys
-
-If the GitHub repository is already connected to the Netlify site, pushes to its configured production branch deploy automatically. No GitHub token or `GITHUB_TOKEN` is needed for this static site. Check the Netlify site's **Deploys** page to confirm the build completed and the production URL is live.
-
-For this site, use the repository root (`.`) as the publish directory and leave the build command empty. `netlify.toml` contains the hosting and cache headers.
-
-## Image quality and performance
-
-The page uses the images committed under `images/`; CSS cannot turn a small source image into true 4K detail. For sharp large-screen imagery, upload original high-resolution photos and export optimized WebP/AVIF variants at the sizes actually used. Keep hero imagery high priority and defer below-the-fold images so mobile visitors do not download full-resolution assets unnecessarily.
-
-Never commit access tokens. If a token was shared in chat or another public place, revoke it in GitHub settings and use a new, least-privilege credential only in a local secret store.
+- **Cloudflare Pages:** free, with unlimited bandwidth. Connect this repo, leave the build command empty and set the output directory to `/`.
+- **Vercel (Hobby plan):** free for personal projects. Import this repo and keep the default settings.
